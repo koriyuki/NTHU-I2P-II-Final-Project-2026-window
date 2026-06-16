@@ -15,8 +15,9 @@ typedef std::pair<Point, Point> Move;
 enum GameState { UNKNOWN = 0, WIN, DRAW, NONE };
 
 /* === Score bounds === */
-constexpr int P_MAX = 100000;
-constexpr int M_MAX = -100000;
+constexpr int INF = 100000;
+constexpr int P_MAX = INF;
+constexpr int M_MAX = -INF;
 
 class BaseState {
 public:

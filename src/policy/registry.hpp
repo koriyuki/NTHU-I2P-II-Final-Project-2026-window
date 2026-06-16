@@ -30,7 +30,7 @@ inline const std::vector<AlgoEntry>& get_algo_table(){
             MiniMax::default_params(),
             MiniMax::param_defs(),
             [](State* s, int d, GameHistory& h, SearchContext& c){
-                return MiniMax::search(s, d, h, c);
+                return MiniMax::search(s, d, h, c, -INF, INF);
             }
         },
         {
