@@ -24,13 +24,17 @@ public:
         GameHistory& history,
         int ply,
         SearchContext& ctx,
-        const MMParams& p
+        const MMParams& p,
+        int alpha,
+        int beta
     );
     static SearchResult search(
         State *state,
         int depth,
         GameHistory& history,
-        SearchContext& ctx
+        SearchContext& ctx,
+        int alpha,
+        int beta
     );
 
     static ParamMap default_params();
