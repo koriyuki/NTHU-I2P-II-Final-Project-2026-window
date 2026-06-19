@@ -15,12 +15,12 @@
 /* MVV-LVA piece values for move ordering (indexed by piece type) */
 static const int PIECE_VALUES[] = {
     0,   /* EMPTY=0 */
-    10,  /* PAWN=1 */
-    50,  /* ROOK=2 */
-    30,  /* KNIGHT=3 */
-    30,  /* BISHOP=4 */
-    90,  /* QUEEN=5 */
-    900, /* KING=6 */
+    100,  /* PAWN=1 */
+    500,  /* ROOK=2 */
+    300,  /* KNIGHT=3 */
+    300,  /* BISHOP=4 */
+    900,  /* QUEEN=5 */
+    10000, /* KING=6 */
 };
 
 /* === Piece display === */

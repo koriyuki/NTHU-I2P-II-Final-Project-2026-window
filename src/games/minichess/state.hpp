@@ -53,6 +53,8 @@ public:
     void get_legal_actions() override;
     void get_legal_actions_naive();
     void get_legal_actions_bitboard();
+    std::vector<Move> get_capture_moves();
+    int mvv_lva_score(const Move& move);
     std::string encode_output() const override;
     std::string encode_state();
 

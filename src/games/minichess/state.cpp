@@ -17,10 +17,12 @@
 // KP material (10x scale for fine positional granularity)
 static const int kp_material[7] = {0, 20, 60, 70, 80, 200, 1000};
 
-// Material-only (simple scale)
-static const int simple_material[7] = {0, 2, 6, 7, 8, 20, 100};
+    // Material-only (simple scale)
+    static const int simple_material[7] = {0, 2, 6, 7, 8, 20, 100};
 
-// Piece-Square Tables (white perspective, mirror for black)
+    static const int piece_value[7] = {0, 20, 60, 70, 80, 200, 1000};
+
+    // Piece-Square Tables (white perspective, mirror for black)
 static const int pst[6][BOARD_H][BOARD_W] = {
     // Pawn
     {{ 0,  0,  0,  0,  0}, {15, 15, 15, 15, 15}, { 4,  6, 10,  6,  4},
@@ -442,6 +444,21 @@ void State::get_legal_actions_naive(){
     this->legal_actions = all_actions;
 }
 
+int State::mvv_lva_score(const Move& move)
+{
+    Point from = move.first;
+    Point to   = move.second;
+
+    int p = player;
+    int attacker = board.board[p][from.first][from.second];
+    int victim   = board.board[p][to.first][to.second];
+
+    if(victim == 0 || attacker - victim > 1)
+        return -10000;
+
+    // 強化版本：victim 優先 + attacker penalty
+    return piece_value[victim] - piece_value[attacker];
+}
 
 /*============================================================
  * Bitboard move generation
@@ -661,6 +678,7 @@ void State::get_legal_actions_bitboard(){
 }
 
 
+
 /*============================================================
  * Dispatcher
  *============================================================*/
@@ -701,6 +719,17 @@ std::string State::encode_output() const{
     return ss.str();
 }
 
+std::vector<Move> State::get_capture_moves(){
+    std::vector<Move> capture_moves;
+    auto self_board = this->board.board[this->player];
+    for(const Move& move: this->legal_actions){
+        Point to = move.second;
+        if(self_board[to.first][to.second]){
+            capture_moves.push_back(move);
+        }
+    }
+    return capture_moves;
+}
 
 /**
  * @brief encode the state to the format for player
